@@ -284,12 +284,12 @@ dictionary[key] = newObject;    <span class="co">// replace oldObject with newOb
 <span class="co">// 処理終了後にコールバックするメソッド</span>
 - (<span class="dt">void</span>)somenthingToDo:(id)target delegate:(id)delegate {
     [target ...]; <span class="co">// 何かする</span>
-    [delegate didFinishFinishedProcess];
+    [delegate didFinishedProcess];
 }
 <span class="kw">@end</span></code></pre>
 <pre class="sourceCode objectivec"><code class="sourceCode objectivec">
 <span class="co">// コールバック用のメソッドをわざわざ作る必要がある</span>
-- (<span class="dt">void</span>)didFinishFinishedProcess {
+- (<span class="dt">void</span>)didFinishedProcess {
     NSLog(<span class="st">@&quot;Finished!&quot;</span>);
 }
 

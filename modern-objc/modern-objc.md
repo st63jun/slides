@@ -243,14 +243,14 @@ ARCが有効の場合、コンパイラが次のように書き換える
 // 処理終了後にコールバックするメソッド
 - (void)somenthingToDo:(id)target delegate:(id)delegate {
     [target ...]; // 何かする
-    [delegate didFinishFinishedProcess];
+    [delegate didFinishedProcess];
 }
 @end
 ~~~
 ~~~ { .objectivec }
 
 // コールバック用のメソッドをわざわざ作る必要がある
-- (void)didFinishFinishedProcess {
+- (void)didFinishedProcess {
     NSLog(@"Finished!");
 }
 
