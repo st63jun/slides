@@ -345,7 +345,7 @@ int (^myBlock)(int) = ^(int num) {
     return num * multiplier;
 };
 
-NSLog(@"%d", multiplier); // -> 200
+NSLog(@"%d", multiplier); // -> 100
 ~~~
 
 # GCD (Grand Central Dispatch)
