@@ -1,67 +1,490 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-
 <head>
-<title>[slide show title here]</title>
-<!-- metadata -->
-<meta name="generator" content="S5" />
-<meta name="version" content="S5 1.1" />
-<meta name="presdate" content="20050728" />
-<meta name="author" content="Eric A. Meyer" />
-<meta name="company" content="Complex Spiral Consulting" />
-<!-- configuration parameters -->
-<meta name="defaultView" content="slideshow" />
-<meta name="controlVis" content="hidden" />
-<!-- style sheet links -->
-<link rel="stylesheet" href="ui/default/slides.css" type="text/css" media="projection" id="slideProj" />
-<link rel="stylesheet" href="ui/default/outline.css" type="text/css" media="screen" id="outlineStyle" />
-<link rel="stylesheet" href="ui/default/print.css" type="text/css" media="print" id="slidePrint" />
-<link rel="stylesheet" href="ui/default/opera.css" type="text/css" media="projection" id="operaFix" />
-<!-- S5 JS -->
-<script src="ui/default/slides.js" type="text/javascript"></script>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" type="text/css" media="screen, projection, print"
+    href="http://www.w3.org/Talks/Tools/Slidy2/styles/slidy.css" />
+  <script src="http://www.w3.org/Talks/Tools/Slidy2/scripts/slidy.js.gz"
+    charset="utf-8" type="text/javascript"></script>
 </head>
 <body>
-
-<div class="layout">
-<div id="controls"><!-- DO NOT EDIT --></div>
-<div id="currentSlide"><!-- DO NOT EDIT --></div>
-<div id="header"></div>
-<div id="footer">
-<h1>[location/date of presentation]</h1>
-<h2>[slide show title here]</h2>
+<div id="モダンなobjective-cプログラミング" class="slide section level1">
+<h1>モダンなObjective-Cプログラミング</h1>
+<p>齊藤 潤 (<a href="https://twitter.com/ST63Jun_">@ST63Jun_</a>)</p>
 </div>
-
-</div>
-
-
-<div class="presentation">
-
-<div class="slide">
-<h1>[slide show title here]</h1>
-<h2>[slide show subtitle here]</h2>
-<h3>[name of presenter]</h3>
-<h4>[affiliation of presenter]</h4>
-</div>
-
-
-<div class="slide">
-<h1>[slide title]</h1>
-<ul>
-<li>[point one]</li>
-<li>[point two]</li>
-<li>[point three]</li>
-<li>[point four]</li>
-<li>[point five]</li>
+<div id="自己紹介" class="slide section level1">
+<h1>自己紹介</h1>
+<ul class="incremental">
+<li>齊藤 潤 (<a href="https://twitter.com/ST63Jun_">@ST63Jun_</a>)</li>
+<li>修了間際の大学院生</li>
+<li>茨城に引越しました</li>
 </ul>
-<div class="handout">
-[any material that should appear in print but not on the slide]
 </div>
+<div id="summary" class="slide section level1">
+<h1>Summary</h1>
+<ul class="incremental">
+<li>新リテラル - NSNumberリテラル，Boxed Expression, NSArrayリテラル，NSDictionaryリテラル, 添字アクセス</li>
+<li>コンパイラがメモリ管理を肩代わり - ARC (Automatic Retain Count)</li>
+<li>Cでも無名関数 - Blocks</li>
+<li>マルチスレッドプログラミングを簡単に - GCD (Grand Central Dispatch)</li>
+<li>Bundlerライクなライブラリ管理 - CocoaPods</li>
+</ul>
 </div>
-
-
+<div id="はじめに" class="slide section level1">
+<h1>はじめに</h1>
+<ul class="incremental">
+<li>Objective-C のプログラミング環境はどんどん良くなってる
+<ul class="incremental">
+<li>コーディングを楽に</li>
+<li>エンバグの軽減</li>
+</ul></li>
+<li>一方、Web上の記事や書籍のコードは古いまま</li>
+<li>古い情報に流されないためにも、新しいコンパイラやツールの機能を確認しておこう</li>
+</ul>
 </div>
+<div id="nsnumberリテラル" class="slide section level1">
+<h1>NSNumberリテラル</h1>
+<pre class="sourceCode objectivec"><code class="sourceCode objectivec"><span class="dt">void</span> main(<span class="dt">int</span> argc, <span class="dt">const</span> <span class="dt">char</span> *argv[]) {
+  <span class="co">// character literals.</span>
+  NSNumber *theLetterZ = @&#39;Z&#39;;          <span class="co">// equivalent to [NSNumber numberWithChar:&#39;Z&#39;]</span>
 
+  <span class="co">// integral literals.</span>
+  NSNumber *fortyTwo = @<span class="dv">42</span>;             <span class="co">// equivalent to [NSNumber numberWithInt:42]</span>
+  NSNumber *fortyTwoUnsigned = @42U;    <span class="co">// equivalent to [NSNumber numberWithUnsignedInt:42U]</span>
+  NSNumber *fortyTwoLong = @42L;        <span class="co">// equivalent to [NSNumber numberWithLong:42L]</span>
+  NSNumber *fortyTwoLongLong = @42LL;   <span class="co">// equivalent to [NSNumber numberWithLongLong:42LL]</span>
+
+  <span class="co">// floating point literals.</span>
+  NSNumber *piFloat = @<span class="fl">3.</span>141592654F;    <span class="co">// equivalent to [NSNumber numberWithFloat:3.141592654F]</span>
+  NSNumber *piDouble = @<span class="fl">3.1415926535</span>;   <span class="co">// equivalent to [NSNumber numberWithDouble:3.1415926535]</span>
+
+  <span class="co">// BOOL literals.</span>
+  NSNumber *yesNumber = @YES;           <span class="co">// equivalent to [NSNumber numberWithBool:YES]</span>
+  NSNumber *noNumber = @NO;             <span class="co">// equivalent to [NSNumber numberWithBool:NO]</span>
+
+<span class="ot">#ifdef __cplusplus</span>
+  NSNumber *trueNumber = @true;         <span class="co">// equivalent to [NSNumber numberWithBool:(BOOL)true]</span>
+  NSNumber *falseNumber = @false;       <span class="co">// equivalent to [NSNumber numberWithBool:(BOOL)false]</span>
+<span class="ot">#endif</span>
+}</code></pre>
+<ul class="incremental">
+<li>プリミティブ型のボクシングが楽になりました</li>
+</ul>
+</div>
+<div id="boxed-expression" class="slide section level1">
+<h1>Boxed Expression</h1>
+<pre class="sourceCode objectivec"><code class="sourceCode objectivec"><span class="co">// numbers.</span>
+NSNumber *smallestInt = @(-INT_MAX - <span class="dv">1</span>);  <span class="co">// [NSNumber numberWithInt:(-INT_MAX - 1)]</span>
+NSNumber *piOverTwo = @(M_PI / <span class="dv">2</span>);        <span class="co">// [NSNumber numberWithDouble:(M_PI / 2)]</span>
+
+<span class="co">// enumerated types.</span>
+<span class="kw">typedef</span> <span class="kw">enum</span> { Red, Green, Blue } Color;
+NSNumber *favoriteColor = @(Green);       <span class="co">// [NSNumber numberWithInt:((int)Green)]</span></code></pre>
+<ul class="incremental">
+<li>@(...) で囲むと計算結果をボクシングすることができます</li>
+</ul>
+</div>
+<div id="boxed-expression-1" class="slide section level1">
+<h1>Boxed Expression</h1>
+<pre class="sourceCode objectivec"><code class="sourceCode objectivec"><span class="co">// strings.</span>
+NSString *path = @(getenv(<span class="st">&quot;PATH&quot;</span>));       <span class="co">// [NSString stringWithUTF8String:(getenv(&quot;PATH&quot;))]</span>
+NSArray *pathComponents = [path componentsSeparatedByString:<span class="st">@&quot;:&quot;</span>];</code></pre>
+<ul class="incremental">
+<li>C String -&gt; NSString の変換もできます</li>
+</ul>
+</div>
+<div id="nsarraynsdictionaryリテラル" class="slide section level1">
+<h1>NSArray・NSDictionaryリテラル</h1>
+<pre class="sourceCode objectivec"><code class="sourceCode objectivec">NSArray *elements = @[ <span class="st">@&quot;H&quot;</span>, <span class="st">@&quot;He&quot;</span>, <span class="st">@&quot;O&quot;</span>, <span class="st">@&quot;C&quot;</span> ];
+NSDictionary *masses = @{ <span class="st">@&quot;H&quot;</span> : @<span class="fl">1.0078</span>,  <span class="st">@&quot;He&quot;</span> : @<span class="fl">4.0026</span>, <span class="st">@&quot;O&quot;</span> : @<span class="fl">15.9990</span>, <span class="st">@&quot;C&quot;</span> : @<span class="fl">12.0096</span> };</code></pre>
+<ul class="incremental">
+<li>NSArrayやNSDictionaryの初期化が断然楽になりました</li>
+</ul>
+</div>
+<div id="nsarraynsdictionaryの添字アクセス" class="slide section level1">
+<h1>NSArray・NSDictionaryの添字アクセス</h1>
+<pre class="sourceCode objectivec"><code class="sourceCode objectivec">NSMutableArray *array = ...;
+NSUInteger idx = ...;
+id newObject = ...;
+id oldObject = array[idx];      <span class="co">// -&gt; [array objectAtIndexSubscript:idx]</span>
+array[idx] = newObject;         <span class="co">// replace oldObject with newObject</span>
+
+NSMutableDictionary *dictionary = ...;
+NSString *key = ...;
+oldObject = dictionary[key];    <span class="co">// -&gt; [dictionary objectForKeyedSubscript]</span>
+dictionary[key] = newObject;    <span class="co">// replace oldObject with newObject</span></code></pre>
+<ul class="incremental">
+<li>添字でアクセスできます (required iOS 6+)</li>
+<li>objectAtIndexSubscript: or objectForKeyedSubscriptを実装すれば独自クラスでも使えます</li>
+</ul>
+</div>
+<div id="arc-automatic-reference-counting" class="slide section level1">
+<h1>ARC (Automatic Reference Counting)</h1>
+<ul class="incremental">
+<li>これまでのObjective-Cプログラミングは苦しみに満ちていた
+<ul class="incremental">
+<li>手動メモリ管理</li>
+<li>release 忘れ
+<ul class="incremental">
+<li>メモリリーク</li>
+</ul></li>
+<li>二重 release
+<ul class="incremental">
+<li>&gt; 突然の死 &lt;</li>
+</ul></li>
+</ul></li>
+<li>Appleが導き出した答え
+<ul class="incremental">
+<li><em>ARC (Automatic Reference Counting)</em></li>
+<li>コンパイラがプログラマの代わりにretain, releaseするコードを書いてくれる</li>
+</ul></li>
+</ul>
+</div>
+<div id="arc-automatic-reference-counting-1" class="slide section level1">
+<h1>ARC (Automatic Reference Counting)</h1>
+<pre class="sourceCode objectivec"><code class="sourceCode objectivec">{
+    id obj = [NSArray alloc] init];
+}</code></pre>
+<p>ARCが有効の場合、コンパイラが次のように書き換える</p>
+<pre class="sourceCode objectivec"><code class="sourceCode objectivec">{
+    id __strong obj = [NSArray alloc] init];
+    [obj release];  <span class="co">// 変数のスコープの範囲を超えるときにreleaseされる</span>
+}</code></pre>
+</div>
+<div id="arcを有効にするとどうなるの" class="slide section level1">
+<h1>ARCを有効にするとどうなるの</h1>
+<p>以下の制限が発生します:</p>
+<ul class="incremental">
+<li>retain / release / retainCount / autorelease / dealloc が呼べない (コンパイルエラーになる)</li>
+</ul>
+<pre class="sourceCode objectivec"><code class="sourceCode objectivec">- (<span class="dt">void</span>)dealloc {
+     <span class="co">// よくあるdeallocをオーバーライドするイディオム</span>
+     [myObject release];
+     [<span class="kw">super</span> dealloc]; <span class="co">// &lt;- ARC有効の場合はコンパイルエラーになるので消す必要がある</span>
+}</code></pre>
+<ul class="incremental">
+<li>NSAutoreleasePoolオブジェクトを作成できない
+<ul class="incremental">
+<li>代わりに @autoreleasepoolブロックを使う</li>
+</ul></li>
+<li>(void *)とid型の暗黙的なキャストはできない</li>
+<li>Objective-Cのオブジェクトを構造体のメンバにできない</li>
+</ul>
+</div>
+<div id="arcの注意点" class="slide section level1">
+<h1>ARCの注意点</h1>
+<p>コードによってはメモリリークが起こる (例：循環参照するオブジェクトの場合)</p>
+<pre class="sourceCode objectivec"><code class="sourceCode objectivec"><span class="kw">@interface</span> MyObject : NSObject
+{
+    id __strong mObj;
+}
+- (<span class="dt">void</span>)setObject:(id __strong)obj;
+<span class="kw">@end</span>
+<span class="kw">@implementation</span> MyObject
+- (id)init
+{
+    <span class="kw">self</span> = [<span class="kw">super</span> init];
+    <span class="kw">return</span> <span class="kw">self</span>;
+}
+- (<span class="dt">void</span>)setObject:(id __strong)obj
+{
+    mObj = obj; <span class="co">// このときコンパイラは obj をretain する</span>
+}
+<span class="kw">@end</span></code></pre>
+<pre class="sourceCode objectivec"><code class="sourceCode objectivec">{
+    id obj = [[MyObject alloc] init]; <span class="co">// -&gt; obj.retainCount -&gt; 1</span>
+    [obj setObject:obj];              <span class="co">// -&gt; obj.retainCount -&gt; 2</span>
+}
+<span class="co">// スコープ終了によりコンパイラが [obj release]</span>
+<span class="co">// obj.release -&gt; 1</span>
+<span class="co">// まだretainCountが残っている -&gt; メモリリーク!</span></code></pre>
+<p>これは__weak修飾子を使うことで回避できる</p>
+</div>
+<div id="weak修飾子" class="slide section level1">
+<h1>__weak修飾子</h1>
+<pre class="sourceCode objectivec"><code class="sourceCode objectivec"><span class="kw">@interface</span> MyObject : NSObject
+{
+    id __weak mObj; <span class="co">// __weak修飾子を指定</span>
+}
+- (<span class="dt">void</span>)setObject:(id __strong)obj;
+<span class="kw">@end</span>
+<span class="kw">@implementation</span> MyObject
+- (id)init
+{
+    <span class="kw">self</span> = [<span class="kw">super</span> init];
+    <span class="kw">return</span> <span class="kw">self</span>;
+}
+- (<span class="dt">void</span>)setObject:(id __strong)obj
+{
+    mObj = obj; <span class="co">// mObjは__weak修飾付きなので、コンパイラは obj を retain *しない*</span>
+}
+<span class="kw">@end</span></code></pre>
+<pre class="sourceCode objectivec"><code class="sourceCode objectivec">{
+    id obj = [[MyObject alloc] init]; <span class="co">// -&gt; obj.retainCount -&gt; 1</span>
+    [obj setObject:obj];              <span class="co">// -&gt; obj.retainCount -&gt; 1</span>
+}
+<span class="co">// スコープ終了によりコンパイラが [obj release]</span>
+<span class="co">// obj.release -&gt; 0</span>
+<span class="co">// [obj dealloc]が呼ばれてメモリ解放 -&gt; All right!</span></code></pre>
+</div>
+<div id="arcのまとめ" class="slide section level1">
+<h1>ARCのまとめ</h1>
+<ul class="incremental">
+<li>自分で retain / release を書かないので楽!
+<ul class="incremental">
+<li>ヒューマンエラーに起因するメモリ関連のバグも減る</li>
+</ul></li>
+<li>ただし万能ではない (例: 循環参照によるメモリリーク)
+<ul class="incremental">
+<li>コンパイラがメモリ管理をやってくれるからといって、プログラマはそれを忘れていいわけではない</li>
+<li>参照カウントを意識すること</li>
+</ul></li>
+</ul>
+</div>
+<div id="blocks" class="slide section level1">
+<h1>Blocks</h1>
+<ul class="incremental">
+<li>AppleによるC言語版クロージャ
+<ul class="incremental">
+<li>実装はCなのでObjective-CだけではなくCやC++でも使える (そう、clangならね)</li>
+</ul></li>
+<li>Blocksを使うことでコールバック関数等の記述量が格段に減る</li>
+</ul>
+</div>
+<div id="blocks以前" class="slide section level1">
+<h1>Blocks以前</h1>
+<pre class="sourceCode objectivec"><code class="sourceCode objectivec"><span class="kw">@interface</span> Worker : NSObject
+<span class="kw">@end</span>
+<span class="kw">@implementation</span> Worker
+<span class="co">// 処理終了後にコールバックするメソッド</span>
+- (<span class="dt">void</span>)somenthingToDo:(id)target delegate:(id)delegate {
+    [target ...]; <span class="co">// 何かする</span>
+    [delegate didFinishFinishedProcess];
+}
+<span class="kw">@end</span></code></pre>
+<pre class="sourceCode objectivec"><code class="sourceCode objectivec">
+<span class="co">// コールバック用のメソッドをわざわざ作る必要がある</span>
+- (<span class="dt">void</span>)didFinishFinishedProcess {
+    NSLog(<span class="st">@&quot;Finished!&quot;</span>);
+}
+
+- (<span class="dt">void</span>)test {
+    Worker *worker = [[Worker alloc] init];
+    [worker somethingToDo:target delegate:<span class="kw">self</span>];
+}</code></pre>
+</div>
+<div id="blocks以降" class="slide section level1">
+<h1>Blocks以降</h1>
+<pre class="sourceCode objectivec"><code class="sourceCode objectivec"><span class="kw">@interface</span> Worker : NSObject
+<span class="kw">@end</span>
+<span class="kw">@implementation</span> Worker
+<span class="co">// Blockを使うように変更</span>
+- (<span class="dt">void</span>)somenthingToDo:(id)target finished:(^callback)(<span class="dt">void</span>) {
+    [target ...]; <span class="co">// 何かする</span>
+    callback();
+}
+<span class="kw">@end</span></code></pre>
+<pre class="sourceCode objectivec"><code class="sourceCode objectivec">- (<span class="dt">void</span>)test {
+    Worker *worker = [[Worker alloc] init];
+    [worker somethingToDo:target finished:^ {
+        NSLog(<span class="st">@&quot;Finished!&quot;</span>);  <span class="co">// 自然に記述できる!</span>
+    }];
+}</code></pre>
+<p>コーディング量が減ったのがわかったと思います</p>
+</div>
+<div id="blcokの構文" class="slide section level1">
+<h1>Blcokの構文</h1>
+<pre class="sourceCode objectivec"><code class="sourceCode objectivec"><span class="dt">int</span> multiplier = <span class="dv">7</span>;
+<span class="dt">int</span> (^myBlock)(<span class="dt">int</span>) = ^(<span class="dt">int</span> num) {
+    <span class="kw">return</span> num * multiplier;
+};</code></pre>
+<p><img src="blocks_syntax.png" alt="http://bit.ly/ZXZjHR より" /><br /></p>
+</div>
+<div id="関数ポインタとの比較" class="slide section level1">
+<h1>関数ポインタとの比較</h1>
+<pre class="sourceCode c"><code class="sourceCode c"><span class="dt">int</span> func(<span class="dt">int</span> num) {
+    <span class="kw">return</span> num * <span class="dv">7</span>;
+}
+
+<span class="dt">int</span> main() {
+    <span class="dt">int</span> multiplier = <span class="dv">7</span>;
+
+    <span class="co">// 関数ポインタ</span>
+    <span class="dt">int</span> (*myFuncPtr)(<span class="dt">int</span>) = &amp;func;
+    <span class="co">// Block (関数ポインタの宣言と似てる)</span>
+    <span class="dt">int</span> (^myBlock)(<span class="dt">int</span>) = ^(<span class="dt">int</span> num) {
+       <span class="kw">return</span> num * multiplier;
+    };
+
+    (*myFuncPtr)(<span class="dv">2</span>); <span class="co">// -&gt; 14</span>
+    myBlock(<span class="dv">2</span>);      <span class="co">// -&gt; 14</span>
+}</code></pre>
+<ul class="incremental">
+<li>ただし、Blocksは関数ポインタと違い <em>自動変数のキャプチャができる</em></li>
+<li>また、BlocksはObjective-Cのオブジェクトとしても使える (Toll-free bridge)</li>
+</ul>
+</div>
+<div id="自動変数のキャプチャ" class="slide section level1">
+<h1>自動変数のキャプチャ</h1>
+<pre class="sourceCode objectivec"><code class="sourceCode objectivec"><span class="dt">int</span> multiplier = <span class="dv">7</span>; <span class="co">// &lt;- この時点でのmultiplierの値がBlockキャプチャされる</span>
+<span class="dt">int</span> (^myBlock)(<span class="dt">int</span>) = ^(<span class="dt">int</span> num) {
+    <span class="kw">return</span> num * multiplier;  <span class="co">// &lt;- multiplierの値は7</span>
+};</code></pre>
+<ul class="incremental">
+<li>Blockは外の変数の値を記憶する
+<ul class="incremental">
+<li>値は必要に応じてヒープにコピーされるので、キャプチャ元の変数のスコープを超えた場所でもアクセスできる</li>
+<li>ただし、__block指定子を付けない場合は書換えはできない</li>
+</ul></li>
+</ul>
+<pre class="sourceCode objectivec"><code class="sourceCode objectivec"><span class="dt">int</span> multiplier = <span class="dv">7</span>; <span class="co">// &lt;- この時点でのmultiplierの値がBlockキャプチャされる</span>
+<span class="dt">int</span> (^myBlock)(<span class="dt">int</span>) = ^(<span class="dt">int</span> num) {
+    multiplier = <span class="dv">100</span>;         <span class="co">// &lt;- コンパイルエラー</span>
+    <span class="kw">return</span> num * multiplier;
+};</code></pre>
+<pre class="sourceCode objectivec"><code class="sourceCode objectivec">__block <span class="dt">int</span> multiplier = <span class="dv">7</span>; <span class="co">// __block指定子を付ける</span>
+<span class="dt">int</span> (^myBlock)(<span class="dt">int</span>) = ^(<span class="dt">int</span> num) {
+    multiplier = <span class="dv">100</span>;
+    <span class="kw">return</span> num * multiplier;
+};
+
+NSLog(<span class="st">@&quot;%d&quot;</span>, multiplier); <span class="co">// -&gt; 200</span></code></pre>
+</div>
+<div id="gcd-grand-central-dispatch" class="slide section level1">
+<h1>GCD (Grand Central Dispatch)</h1>
+<ul class="incremental">
+<li>マルチスレッドプログラミングを簡単に扱うための仕組み
+<ul class="incremental">
+<li>Java経験者であれば java.util.concurrentパッケージみたいなものだと言うとわかりやすいかも</li>
+</ul></li>
+<li>GCD以前
+<ul class="incremental">
+<li>NSThreadを使う</li>
+<li>NSObject#performSelectorInBackground:withObject: を使う</li>
+<li>いずれもスレッドの実行順序を管理する機能がない
+<ul class="incremental">
+<li>デッドロックやリソース競合に起因するバグを埋め込みやすい</li>
+</ul></li>
+</ul></li>
+<li>GCD以降
+<ul class="incremental">
+<li><em>Dispatch Queue</em> によってスレッドの実行順序をプログラマが制御できる</li>
+<li>システム (XNUカーネル) レベルで実装されているため高速</li>
+</ul></li>
+</ul>
+</div>
+<div id="dispatch-queue" class="slide section level1">
+<h1>Dispatch Queue</h1>
+<pre class="sourceCode objectivec"><code class="sourceCode objectivec"><span class="co">// Serial Dispatch Queueを作成</span>
+dispatch_queue_t sdq = dispatch_queue_create(
+    <span class="st">&quot;com.example.app.MySerialDispatchQueue&quot;</span>, NULL);
+
+<span class="co">// Concurrent Dispatch Queueを作成</span>
+dispatch_queue_t cdq = dispatch_queue_create(
+    <span class="st">&quot;com.example.app.MyConcurrentDispatchQueue&quot;</span>, DISPATCH_QUEUE_CONCURRENT);
+
+<span class="co">// iOS 6未満ではDispatch Queueは手動でリリースする必要がある</span>
+dispatch_release(sdq);
+dispatch_release(cdq);
+
+<span class="co">// システムが使用するDispath Queueを取得 (RunLoopの処理に使われている)</span>
+dispatch_queue_t mdq = dispatch_get_main_queue();
+
+<span class="co">// アプリケーション共用のデフォルトDispath Queueを取得</span>
+dispatch_queue_t gdq = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, <span class="dv">0</span>); <span class="co">// 標準の優先度のキューを取得</span></code></pre>
+<ul class="incremental">
+<li>実行すべき処理を投入するキュー構造のオブジェクト
+<ul class="incremental">
+<li>Serial Dispatch Queue - 一つのスレッドで順番に処理するキュー</li>
+<li>Concurrent Dispatch Queue - 複数のスレッドで並列に実行するキュー</li>
+</ul></li>
+</ul>
+</div>
+<div id="処理の追加" class="slide section level1">
+<h1>処理の追加</h1>
+<pre class="sourceCode objectivec"><code class="sourceCode objectivec">dispatch_queue_t gdq = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, <span class="dv">0</span>);
+dispatch_async(gdq, ^{
+    <span class="co">// 並列実行する処理</span>
+});
+dispatch_async(gdq, ^{
+    <span class="co">// 一度に並列実行する数はカーネルが決定する</span>
+});</code></pre>
+<ul class="incremental">
+<li>Blocksを併用することで簡単に並列プログラミングができる!</li>
+</ul>
+</div>
+<div id="cocoapods" class="slide section level1">
+<h1>CocoaPods</h1>
+<ul class="incremental">
+<li>Rubyの<a href="http://gembundler.com/">Bundler</a>ライクな機能を持つライブラリ管理ツール</li>
+<li>ライブラリの依存関係の解決，ダウンロード，プロジェクトへの関連付けを一気にやってくれます
+<ul class="incremental">
+<li>めんどくさいライブラリ管理を簡単にすることで、プログラマの負担を軽減することができます</li>
+</ul></li>
+<li><p>インストール</p>
+<p>$ gem install cocoapods</p>
+<ul class="incremental">
+<li>Ruby製のツールなのでRubyの実行環境が必要です</li>
+</ul></li>
+</ul>
+</div>
+<div id="podsfile" class="slide section level1">
+<h1>Podsfile</h1>
+<pre class="sourceCode ruby"><code class="sourceCode ruby">    platform <span class="st">:ios</span>
+    pod <span class="st">&#39;Sparrow-Framework&#39;</span>, <span class="st">&#39;~&gt; 1.4&#39;</span></code></pre>
+<ul class="incremental">
+<li>プロジェクトが使用するライブラリの情報を <em>Podsfile</em>というファイルに記述します
+<ul class="incremental">
+<li>Podsfileはプロジェクトディレクトリのルート (.xcodeproj) と同じ階層に設置します</li>
+<li>ターミナルで pod install すると、Podsfileに記述したライブラリをダウンロードし、依存関係の関連付けを行ったワークスペースが作成されます</li>
+</ul></li>
+</ul>
+</div>
+<div id="まとめ" class="slide section level1">
+<h1>まとめ</h1>
+<ul class="incremental">
+<li>新リテラルによってコーディングが地味に楽に</li>
+<li>ARCは最高だけどメモリ管理はまだまだプログラマの責任</li>
+<li>Blocksでコールバックを簡潔に記述できる</li>
+<li>GCDはマルチスレッドプログラミングを簡単にするためのAPI</li>
+<li>CocoaPods便利</li>
+</ul>
+</div>
+<div id="おわり" class="slide section level1">
+<h1>おわり</h1>
+<ul class="incremental">
+<li>この資料を作るときに参考にした書籍・Webページ
+<ul class="incremental">
+<li><a href="http://tatsu-zine.com/books/objc">「エキスパートObjective-Cプログラミング ― iOS/OS Xのメモリ管理とマルチスレッド」 坂本一樹</a></li>
+<li><a href="http://clang.llvm.org/docs/LanguageExtensions.html#objective-c-features">Clang Language Extensions — Clang 3.3 documentation</a></li>
+<li><a href="http://cocoapods.org/">CocoaPods: The Objective-C Library Manager</a></li>
+</ul></li>
+</ul>
+</div>
 </body>
 </html>
