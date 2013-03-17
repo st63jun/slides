@@ -55,7 +55,7 @@ var w3c_slidy = {
   scroll_hack: 0, // IE work around for position: fixed
   disable_slide_click: false,  // used by clicked anchors
 
-  lang: "en", // updated to language specified by html file
+  lang: "ja", // updated to language specified by html file
 
   help_anchor: null, // used for keyboard focus hack in showToolbar()
   help_page: "http://www.w3.org/Talks/Tools/Slidy2/help/help.html",
@@ -891,6 +891,16 @@ var w3c_slidy = {
        var gap2 = document.createTextNode(" ");
        left.appendChild(gap2);
 
+       var feedback = this.create_element("a");
+       feedback.setAttribute("href", "https://github.com/st63jun/slides/issues/new");
+       feedback.setAttribute("title", this.localize("send feedback"));
+       feedback.setAttribute("target", "_blank");
+       feedback.innerHTML = this.localize("feedback?");
+       left.appendChild(feedback);
+
+       var gap3 = document.createTextNode(" ");
+       this.toolbar.appendChild(gap3);
+
        var copyright = this.find_copyright();
 
        if (copyright)
@@ -949,6 +959,16 @@ var w3c_slidy = {
 
        var gap2 = document.createTextNode(" ");
        this.toolbar.appendChild(gap2);
+
+       var feedback = this.create_element("a");
+       feedback.setAttribute("href", "https://github.com/st63jun/slides/issues/new");
+       feedback.setAttribute("title", this.localize("send feedback".localize));
+       feedback.setAttribute("target", "_blank");
+       feedback.innerHTML = this.localize("feedback?");
+       this.toolbar.appendChild(feedback);
+
+       var gap3 = document.createTextNode(" ");
+       this.toolbar.appendChild(gap3);
 
        var copyright = this.find_copyright();
 
@@ -2844,7 +2864,9 @@ var w3c_slidy = {
     "table of contents":"目次を表示",
     "Table of Contents":"目次",
     "restart presentation":"最初から再生",
-    "restart?":"最初から"
+    "restart?":"最初から",
+    "feedback?":"フィードバックを送る",
+    "send feedback":"GitHubを開きます"
   },
   help_ja:
      "マウス左クリック ・ スペース ・ 左右キー " +
@@ -2945,7 +2967,7 @@ var w3c_slidy = {
       "hu":this.strings_hu,
       "it":this.strings_it,
       "el":this.strings_el,
-      "jp":this.strings_ja,
+      "ja":this.strings_ja,
       "zh":this.strings_zh,
       "ru":this.strings_ru,
       "sv":this.strings_sv
