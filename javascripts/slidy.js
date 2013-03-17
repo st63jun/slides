@@ -872,6 +872,15 @@ var w3c_slidy = {
        this.eos.innerHTML = "* ";
        left.appendChild(this.eos);
 
+       var home = this.create_element("a");
+       home.setAttribute("href", "http://st63jun.github.com/slides/");
+       home.setAttribute("title", this.localize("back to homepage"));
+       home.innerHTML = this.localize("home?");
+       left.appendChild(home);
+
+       var gap0 = document.createTextNode(" ");
+       left.appendChild(gap0);
+
        var help = this.create_element("a");
        help.setAttribute("href", this.help_page);
        help.setAttribute("title", this.localize(this.help_text));
@@ -940,6 +949,15 @@ var w3c_slidy = {
        sp.innerHTML = "&nbsp;&nbsp;*&nbsp;";
        this.toolbar.appendChild(sp);
        this.eos = sp;  // end of slide indicator
+
+       var home = this.create_element("a");
+       home.setAttribute("href", "http://st63jun.github.com/slides/");
+       home.setAttribute("title", this.localize("back to homepage"));
+       home.innerHTML = this.localize("home?");
+       this.toolbar.appendChild(home);
+
+       var gap0 = document.createTextNode(" ");
+       this.toolbar.appendChild(gap0);
 
        var help = this.create_element("a");
        help.setAttribute("href", this.help_page);
@@ -2866,7 +2884,9 @@ var w3c_slidy = {
     "restart presentation":"最初から再生",
     "restart?":"最初から",
     "feedback?":"フィードバックを送る",
-    "send feedback":"GitHubを開きます"
+    "send feedback":"GitHubを開きます",
+    "home?":"ホーム",
+    "back to homepage":"ホームページに戻る"
   },
   help_ja:
      "マウス左クリック ・ スペース ・ 左右キー " +
