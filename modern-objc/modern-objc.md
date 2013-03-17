@@ -1,3 +1,7 @@
+% モダンなObjective-Cプログラミング
+% Jun SAITO
+% March 17, 2013
+
 # モダンなObjective-Cプログラミング
 
 齊藤 潤 ([@ST63Jun_](https://twitter.com/ST63Jun_))
