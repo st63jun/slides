@@ -106,8 +106,9 @@ oldObject = dictionary[key];    // -> [dictionary objectForKeyedSubscript]
 dictionary[key] = newObject;    // replace oldObject with newObject
 ~~~
 
-* 添字でアクセスできます (required iOS 6+)
-* objectAtIndexSubscript: or objectForKeyedSubscriptを実装すれば独自クラスでも使えます
+* 添字でアクセスできます ~~(required iOS 6+)~~
+* objectAtIndexSubscript: or objectForKeyedSubscript:、setObject:atIndexedSubscript: or setObject:forKeyedSubscript: を実装すれば独自クラスでも使えます (参考：[Subscripting Methods](http://clang.llvm.org/docs/ObjectiveCLiterals.html#subscripting-methods))
+* iOS 5以下の場合も上記メソッドを自分で実装すれば使えます (参考：[http://www.kuma-de.com/blog/2012-07-27/3832](http://www.kuma-de.com/blog/2012-07-27/3832))
 
 # ARC (Automatic Reference Counting)
 

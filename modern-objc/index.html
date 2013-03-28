@@ -119,8 +119,9 @@ NSString *key = ...;
 oldObject = dictionary[key];    <span class="co">// -&gt; [dictionary objectForKeyedSubscript]</span>
 dictionary[key] = newObject;    <span class="co">// replace oldObject with newObject</span></code></pre>
 <ul class="incremental">
-<li>添字でアクセスできます (required iOS 6+)</li>
-<li>objectAtIndexSubscript: or objectForKeyedSubscriptを実装すれば独自クラスでも使えます</li>
+<li>添字でアクセスできます <del>(required iOS 6+)</del></li>
+<li>objectAtIndexSubscript: or objectForKeyedSubscript:、setObject:atIndexedSubscript: or setObject:forKeyedSubscript: を実装すれば独自クラスでも使えます (参考：<a href="http://clang.llvm.org/docs/ObjectiveCLiterals.html#subscripting-methods">Subscripting Methods</a>)</li>
+<li>iOS 5以下の場合も上記メソッドを自分で実装すれば使えます (参考：<a href="http://www.kuma-de.com/blog/2012-07-27/3832">http://www.kuma-de.com/blog/2012-07-27/3832</a>)</li>
 </ul>
 </div>
 <div id="arc-automatic-reference-counting" class="slide section level1">
