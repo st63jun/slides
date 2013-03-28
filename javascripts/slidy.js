@@ -104,7 +104,10 @@ var w3c_slidy = {
     //alert("slidy starting test 10");
     document.body.style.visibility = "visible";
     this.init_localization();
-    this.add_toolbar();
+    this.keyboardless = (this.ipad||this.iphone||this.android);
+    if (!this.keyboardless) {
+      this.add_toolbar();
+    }
     this.wrap_implicit_slides();
     this.collect_slides();
     this.collect_notes();
@@ -118,7 +121,6 @@ var w3c_slidy = {
     this.hide_image_toolbar();  // suppress IE image toolbar popup
     this.init_outliner();  // activate fold/unfold support
     this.title = document.title;
-    this.keyboardless = (this.ipad||this.iphone||this.android);
 
     if (this.keyboardless)
     {
