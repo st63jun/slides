@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja-JP">
+<head>
+<meta name="generator" content="pandoc" />
+<title>Windows ストアアプリのデザイン・開発ひとめぐり</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="author" content="Jun SAITO" />
+<meta name="presdate" content="June 29, 2013" />
+<link rel="stylesheet" href="http://www.w3.org/Talks/Tools/Slidy2/styles/slidy.css" type="text/css" />
+<script src="../javascripts/slidy.js?git_commit=e5faac5c8c601f2f23b906d4bd343387e4ee0ffd" charset="utf-8" type="text/javascript">
+</script>
+</head>
+<body>
+<div id="windows-ストアアプリのデザイン開発ひとめぐり" class="slide section level1">
+<h1>Windows ストアアプリのデザイン・開発ひとめぐり</h1>
+<p>齊藤 潤 (<a href="https://twitter.com/ST63Jun_">@ST63Jun_</a>)</p>
+</div>
+<div id="自己紹介" class="slide section level1">
+<h1>自己紹介</h1>
+<ul class="incremental">
+<li>齊藤 潤 (<a href="https://twitter.com/ST63Jun_">@ST63Jun_</a>)</li>
+<li>株式会社ユニキャスト所属</li>
+<li>Windows ストアアプリとRuby on Railsでアプリ開発してます</li>
+</ul>
+</div>
+<div id="summary" class="slide section level1">
+<h1>Summary</h1>
+<ul class="incremental">
+<li>Winddows ストアアプリのデザイン - デザインの原則, タイル・ページ・アプリバー, MVVM, XAML, 非同期プログラミング</li>
+<li>サンプルコード解説 - ブログリーダーアプリのソースコードを読む</li>
+<li>開発のポイント - 注意点、オープンソースプロジェクト</li>
+</ul>
+</div>
+<div id="はじめに" class="slide section level1">
+<h1>はじめに</h1>
+<ul class="incremental">
+<li>Windows 8 から Windows ストア が搭載されました
+<ul class="incremental">
+<li>iOS/Android と同様の、OSビルトインのアプリ流通プラットフォーム</li>
+<li>コンシューマー向けOSのトップシェアを誇る Windows のユーザーを相手にアプリを販売することが可能</li>
+</ul></li>
+<li>今日はそんな Windows ストアアプリのデザインと開発についてざっくり解説します</li>
+<li>おことわり：使用するプログラミング言語はC#を前提とします。</li>
+</ul>
+</div>
+<div id="windows-ストアアプリのデザイン" class="slide section level1">
+<h1>Windows ストアアプリのデザイン</h1>
+<ul class="incremental">
+<li>デザインの原則</li>
+<li>Modern UI</li>
+<li>Model-View-ViewModelパターン</li>
+<li>データバインディング</li>
+<li>XAML (Extensible Application Markup Language)</li>
+<li>非同期プログラミング</li>
+</ul>
+</div>
+<div id="デザインの原則" class="slide section level1">
+<h1>デザインの原則</h1>
+<ul class="incremental">
+<li>Windows ストアアプリは以下の原則を参考にデザインすることが求められています：</li>
+<li>Pride in craftmanship - 作品へのこだわりを示す
+<ul class="incremental">
+<li>ユーザーの目に触れることが多いアプリの細部を作り込みます</li>
+<li>グリッド (GridView) を基に、バランス、対称性、階層構造を意識したデザインをします</li>
+</ul></li>
+<li>Be fast and fluid - 軽快かつ柔軟
+<ul class="incremental">
+<li>ユーザーの操作に対して素早く応答します</li>
+<li>アニメーションを適用することで、ユーザーに楽しみを与えるとともに、タッチ操作の視覚的なフィードバックを提供します</li>
+<li>処理をブロックする可能性のある遅い処理を非同期に実行するために、非同期APIを積極的に利用します</li>
+</ul></li>
+</ul>
+</div>
+<div id="デザインの原則-つづき" class="slide section level1">
+<h1>デザインの原則 (つづき)</h1>
+<ul class="incremental">
+<li>Authentically digital - 真のデジタル化を心がける
+<ul class="incremental">
+<li>「ハードウェアとソフトウェアの機能を明確に示します。デジタル メディアの利点を最大限に活用します。物理的な境界を取り除いて、現実の世界より効率的で容易なエクスペリエンスを実現します。」</li>
+<li>美しいタイポグラフィや大胆で力強い色を使います</li>
+</ul></li>
+<li>Do more with less - より少い要素でより大きな効果を上げる
+<ul class="incremental">
+<li>1つの機能に突出した設計を目指します</li>
+<li>クロム(枠線や水平線)でコンテンツを整理することを避けます</li>
+</ul></li>
+<li>Win as one - 全体で勝つ
+<ul class="incremental">
+<li>ひとつのアプリで完結するのではなく、他のアプリやデバイス、システムと連携してユーザーの要求を満たします</li>
+<li>UXガイドラインに従うことで、統一感のある操作感を提供します</li>
+</ul></li>
+</ul>
+</div>
+<div id="modern-ui" class="slide section level1">
+<h1>Modern UI</h1>
+<ul class="incremental">
+<li>Windows 8 ではユーザーインタフェースが矩形(タイル)を基調としたModern UIへと一新されました (旧称: Metro UI)
+<ul class="incremental">
+<li>アイコンの代わりにタイルを使います</li>
+<li>ウィンドウの代わりにページを使います</li>
+<li>メニューバーの代わりにアプリバーを使います</li>
+</ul></li>
+<li>タイルで情報を表示し、そのタイルをタップするとさらに詳しい情報にジャンプする、というのが基本のパターンになります</li>
+</ul>
+</div>
+<div id="model-view-viewmodelパターン" class="slide section level1">
+<h1>Model-View-ViewModelパターン</h1>
+<ul class="incremental">
+<li>iOSでは MVC (Model-View-Controller) パターンが基本の設計パターンでしたが、Windows ストアアプリでは MVVM (Model-View-ViewModel) パターンを使います</li>
+<li>Model
+<ul class="incremental">
+<li>ビジネスロジックやアプリで使用するデータを表すオブジェクト</li>
+</ul></li>
+<li>View
+<ul class="incremental">
+<li>ユーザーインタフェース</li>
+</ul></li>
+<li>ViewModel
+<ul class="incremental">
+<li>Model の内容を View に橋渡し、またはその逆をするオブジェクト</li>
+</ul></li>
+<li>ModelとViewがViewModelを介してデータをやりとりする
+<ul class="incremental">
+<li>ロジック・データ (Model) とUI (View) の分離がしやすく、疎結合なコードが書きやすい</li>
+</ul></li>
+<li>でもViewModelの実装が大変じゃ…
+<ul class="incremental">
+<li>.NETの「データバインディング」を使うことで簡単に実装できます!</li>
+</ul></li>
+</ul>
+</div>
+<div id="データバインディング" class="slide section level1">
+<h1>データバインディング</h1>
+<ul class="incremental">
+<li>UI (View) のプロパティが変更されると、その変更が事前に設定 (バインド) したオブジェクト (ViewModel) のプロパティに直ちに反映される仕組み</li>
+<li>逆に、バインドしたオブジェクトの値を変更すると、UIのプロパティも変更させることも可能</li>
+<li>Windows ストアアプリでは、ViewModelオブジェクトをViewにバインドし、ModelオジェクトからViewModelを読み書きすることで、データをUIに表示したり、UIからからの入力データを受けとったりします</li>
+</ul>
+</div>
+<div id="xaml-extensible-application-markup-language" class="slide section level1">
+<h1>XAML (Extensible Application Markup Language)</h1>
+<ul class="incremental">
+<li>Windows ストアアプリのViewはXAMLというXMLベースの記述言語で構築します</li>
+<li>前述のデータバインディングはXAMLコードの中で設定することができます</li>
+<li>Visual Studio でXAMLファイルを開くと、マウス操作でUIを作成できるデザイナーが表示されますが、慣れてくるとXAMLを直接書いたほうが早かったりします</li>
+<li>XAMLファイルにはコードビハインド呼ばれる、対となるC#ソースコードが存在します
+<ul class="incremental">
+<li>テキストの全選択やページの移動といったUIコントロールの制御のためのコードはコードビハインドの中に記述します</li>
+</ul></li>
+</ul>
+</div>
+<div id="非同期プログラミング" class="slide section level1">
+<h1>非同期プログラミング</h1>
+<ul class="incremental">
+<li>軽快かつ柔軟なUIの体験を提供するためには、UIスレッドを長時間ブロックするようなプログラムは避ける必要があります
+<ul class="incremental">
+<li>しかし、ネットワーク通信や多量のディスクアクセスといった処理は時間がかかります</li>
+</ul></li>
+<li>このような問題を解決するには、このような重い処理をUIスレッドと別のスレッドで非同期で実行する必要があります
+<ul class="incremental">
+<li>でも、マルチスレッドプログラミングはめんどくさい…</li>
+</ul></li>
+<li>C#ではこのような非同期での処理の実行を簡単に行うため async/await という糖衣構文が容易されています</li>
+</ul>
+</div>
+<div id="サンプルコード解説" class="slide section level1">
+<h1>サンプルコード解説</h1>
+<ul class="incremental">
+<li>MSDNのチュートリアルで紹介されているブログリーダーのソースコードを解説します
+<ul class="incremental">
+<li>チュートリアル: http://msdn.microsoft.com/ja-jp/library/windows/apps/br211380.aspx</li>
+<li>ソースコード: http://code.msdn.microsoft.com/windowsapps/RSS-Reader-affe3358</li>
+</ul></li>
+<li>解説のポイント
+<ul class="incremental">
+<li>App.xaml(.cs)</li>
+<li>MainPage.xml(.cs)
+<ul class="incremental">
+<li>データバインディング</li>
+<li>値コンバーター</li>
+<li>スタイル</li>
+</ul></li>
+<li>FeedData.cs
+<ul class="incremental">
+<li>ViewModelオブジェクト</li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+<div id="開発のポイント" class="slide section level1">
+<h1>開発のポイント</h1>
+<ul class="incremental">
+<li>複数のビューステート (表示状態) をサポートする必要がある
+<ul class="incremental">
+<li>Windows 8 では 縦置き (ポートレート)・横置き (ランドスケープ) のほかにも、複数ページを並べたときに遷移するフィル・スナップという表示状態があります</li>
+<li>アプリの審査ではこれらの4つのビューステートにしてもアプリが正しく機能するかということが検査されます</li>
+<li>一画面にコントロールを沢山配置するとこの対応が大変になるため、ページごとの機能の切り分けが重要になります</li>
+</ul></li>
+<li>標準のデータベースAPIがない
+<ul class="incremental">
+<li>今のところ iOS の CoreData API のような標準のデータベースAPIがありません</li>
+<li>現在は sqlite-net というユーザー製のオープンソースの SQLite ライブラリがよく使われており、開発も活発です
+<ul class="incremental">
+<li>https://github.com/praeclarum/sqlite-net</li>
+</ul></li>
+</ul></li>
+<li>バリデーションは自分で実装する必要がある
+<ul class="incremental">
+<li>WPF/Silverlight ではXAMLコードにバリデーションを行うためのクラスを指定することができましたが、Windows 8 では削除されてしまいました</li>
+<li>今のところ Windows 8 向けのバリデーションのライブラリはない？ので自分で実装す必要がある</li>
+</ul></li>
+<li>時にはガイドラインを破ることも必要
+<ul class="incremental">
+<li>Windows 8 との統一感を出すためには、Microsoft が提示する Modern UI のUXガイドラインに従う必要があります
+<ul class="incremental">
+<li>http://msdn.microsoft.com/ja-JP/library/windows/apps/hh465424</li>
+</ul></li>
+<li>一方で、なんでもフラットに統一すると、統一感はでるけど個性がなくなる</li>
+<li>統一感を重視しつつもく、時には大胆にガイドラインを破るバランス感覚が重要です</li>
+</ul></li>
+</ul>
+</div>
+<div id="まとめ" class="slide section level1">
+<h1>まとめ</h1>
+<ul class="incremental">
+<li>Windows ストアアプリのデザインについて説明しました
+<ul class="incremental">
+<li>原則</li>
+<li>Modern UI</li>
+<li>UXガイドライン</li>
+<li>Model-View-ViewModelパターン</li>
+<li>データバインディング</li>
+<li>XAML (Extensible Application Markup Language)</li>
+<li>非同期プログラミング</li>
+</ul></li>
+<li>Windows ストアアプリのサンプルコードを解説しました
+<ul class="incremental">
+<li>Visual Studio による開発</li>
+<li>ViewModelの実装</li>
+<li>データバインディングの方法</li>
+<li>スタイルによる見た目の設定</li>
+</ul></li>
+<li>開発のポイントについて説明しました
+<ul class="incremental">
+<li>複数のビューステート (表示状態) をサポートする必要がある</li>
+<li>標準のデータベースAPIはなく、sqlite-netが選択肢</li>
+<li>バリデーションは自分で実装する必要がある</li>
+<li>時にはガイドラインを破るバランス感覚も重要</li>
+</ul></li>
+</ul>
+</div>
+</body>
+</html>
