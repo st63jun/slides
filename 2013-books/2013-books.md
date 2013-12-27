@@ -15,7 +15,7 @@
 # 2013 読んで良かった技術書ベスト１０
 
 * 今年社会人プログラマ一年目になる著者の目線で、読んで良かった技術書を１０冊選んでみました
-* O'Reilly の [Safari Books Online](https://safaribooksonline.com/) のユーザなので、O'Reillyの書籍（洋書）が多いです
+* [Safari Books Online](https://safaribooksonline.com/) のユーザなので、O'Reillyの書籍（洋書）が多いです
 * Web系が多めです
 
 # 10位 Head First Python
