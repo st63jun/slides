@@ -85,7 +85,7 @@ Sam Ruby 著 / Pragmatic Bookshelf
 
 <a href="http://www.amazon.co.jp/gp/product/1937785564/ref=as_li_ss_il?ie=UTF8&camp=247&creative=7399&creativeASIN=1937785564&linkCode=as2&tag=httpanalfreeo-22"><img border="0" src="http://ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1937785564&Format=_SL160_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=httpanalfreeo-22" ></a><img src="http://ir-jp.amazon-adsystem.com/e/ir?t=httpanalfreeo-22&l=as2&o=9&a=1937785564" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
 
-* 邦題：RailsによるWebアプリケーション開発（訳書は旧版）
+* 邦題：RailsによるアジャイルWebアプリケーション開発（訳書は旧版）
 * Railsの開発の全体像をこれ一冊で一応学べる
 * Railsに初めて触る人が最初のとっかかりとして読むには良いと思います
 
